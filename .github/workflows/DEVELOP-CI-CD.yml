@@ -42,7 +42,7 @@ jobs:
         run: mkdir node_modules && tar xzf node_modules.tar.gz -C ./node_modules
 
       - name: unit test
-        run: yarn test
+        run: test:unit:ci
 
   release:
     needs: [run-unit-tests]
