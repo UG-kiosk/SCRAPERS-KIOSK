@@ -8,6 +8,7 @@ import { ErrorType } from 'types/error.type';
 import { convertStringToDate } from '../utils/scrapers/news-scraper/convertStringToDate';
 import { removeNewLines } from '../utils/removeNewLines';
 import { removeHTMLAttributes } from '../utils/removeHTMLAttributes';
+import { returnScraperError } from '../utils/errorScraper';
 
 const getBody = async (
     link: string,
@@ -42,22 +43,27 @@ const getPhotos = async (
     return photos.filter((photo) => photo);
 };
 
-export const newsScraperMFI = async (): Promise<News[] | null> => {
-    const mfiNewsSites = ['aktualnosci', 'aktualnosci/archiwum-aktualnosci'];
-    const newsMFIPromises = (await Promise.allSettled(
-        mfiNewsSites.map(async (site) => {
-            return await getNewsInCategoriessMFI(site);
-        }),
-    )) as { status: 'fulfilled' | 'rejected'; value: News[] }[];
-    const resolvedNewsMFIPromises = newsMFIPromises.filter(
-        ({ status }) => status === 'fulfilled',
-    );
-    const newsMFIResponses = resolvedNewsMFIPromises.map(
-        (promise) => promise.value,
-    );
-    //TODO: error handling rejected promises
-
-    return newsMFIResponses.flat();
+export const newsScraperMFI = async (): Promise<News[] | ErrorType> => {
+    try {
+        const mfiNewsSites = [
+            'aktualnosci',
+            'aktualnosci/archiwum-aktualnosci',
+        ];
+        const newsMFIPromises = (await Promise.allSettled(
+            mfiNewsSites.map(async (site) => {
+                return await getNewsInCategoriessMFI(site);
+            }),
+        )) as { status: 'fulfilled' | 'rejected'; value: News[] }[];
+        const resolvedNewsMFIPromises = newsMFIPromises.filter(
+            ({ status }) => status === 'fulfilled',
+        );
+        const newsMFIResponses = resolvedNewsMFIPromises.map(
+            (promise) => promise.value,
+        );
+        return newsMFIResponses.flat();
+    } catch (error) {
+        return returnScraperError(error);
+    }
 };
 
 const getNewsInCategoriessMFI = async (
@@ -112,23 +118,26 @@ const getNewsInCategoriessMFI = async (
     return newsArray;
 };
 
-export const newsScraperINF = async (): Promise<News[] | null> => {
-    const infNewsSites = ['news', 'studinfo'];
-    const newsINFPromises = (await Promise.allSettled(
-        infNewsSites.map(async (site) => {
-            return await getNewsInCategoriesINF(site);
-        }),
-    )) as { status: 'fulfilled' | 'rejected'; value: News[] }[];
+export const newsScraperINF = async (): Promise<News[] | ErrorType> => {
+    try {
+        const infNewsSites = ['news', 'studinfo'];
+        const newsINFPromises = (await Promise.allSettled(
+            infNewsSites.map(async (site) => {
+                return await getNewsInCategoriesINF(site);
+            }),
+        )) as { status: 'fulfilled' | 'rejected'; value: News[] }[];
 
-    const resolvedNewsINFPromises = newsINFPromises.filter(
-        ({ status }) => status === 'fulfilled',
-    );
-    const newsINFResponses = resolvedNewsINFPromises.map(
-        (promise) => promise.value,
-    );
-    //TODO: error handling rejected promises
+        const resolvedNewsINFPromises = newsINFPromises.filter(
+            ({ status }) => status === 'fulfilled',
+        );
+        const newsINFResponses = resolvedNewsINFPromises.map(
+            (promise) => promise.value,
+        );
 
-    return newsINFResponses.flat();
+        return newsINFResponses.flat();
+    } catch (error) {
+        return returnScraperError(error);
+    }
 };
 
 const getNewsInCategoriesINF = async (
