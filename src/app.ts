@@ -5,6 +5,7 @@ import majorsRouter from './routes/majors.route';
 import staffRouter from './routes/staff.route';
 import newsRouter from './routes/news.route';
 import ectsRouter from './routes/ects.route';
+import eventsRouter from './routes/events.route';
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use('/scrape', majorsRouter);
 app.use('/scrape', lessonsPlansRouter);
 app.use('/scrape', staffRouter);
 app.use('/scrape', newsRouter);
+app.use('/scrape', eventsRouter)
 
 app.get('/', (req: Request, res: Response) =>
     res.status(200).send('SCRAPERS-KIOSK'),
