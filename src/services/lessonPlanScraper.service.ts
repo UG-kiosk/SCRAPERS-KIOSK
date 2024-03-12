@@ -168,12 +168,13 @@ const getDataFromCSV = async (
 
     const finalResults: LessonPlanEntry[] = [];
     const mainData = await getData(majorURLObject.mainURL);
+    if (majorURLObject.mainURL) {
+        const mainDataResults = mainData.map((result) =>
+            mapMajorResults(result, majorURLObject.mainURL, 'main'),
+        );
 
-    const mainDataResults = mainData.map((result) =>
-        mapMajorResults(result, majorURLObject.mainURL, 'main'),
-    );
-
-    finalResults.push(...mainDataResults);
+        finalResults.push(...mainDataResults);
+    }
 
     if (majorURLObject.facultyURL) {
         const facultyData = await getData(majorURLObject.facultyURL);
