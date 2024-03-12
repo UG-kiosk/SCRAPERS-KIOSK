@@ -1,6 +1,6 @@
 export const transformCSVField = (
     value: string,
-    field: string
+    field: string,
 ): string | string[] => {
     const transformDay = (day: string) => {
         switch (day) {

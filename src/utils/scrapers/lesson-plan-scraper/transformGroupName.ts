@@ -1,6 +1,6 @@
 export const transformGroupName = (
     majorName: string,
-    groupName: string
+    groupName: string,
 ): string => {
     if (majorName.includes('bezpieczeństwo jądrowe')) {
         if (majorName === groupName) return 'all';
