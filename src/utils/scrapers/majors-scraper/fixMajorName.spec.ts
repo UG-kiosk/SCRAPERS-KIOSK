@@ -3,25 +3,25 @@ import { fixMajorName } from './fixMajorName';
 describe('fixMajorName', () => {
     it('Tryb stacjonarny', () => {
         expect(fixMajorName('Tryb stacjonarny')).toEqual(
-            'Informatyka tryb stacjonarny'
+            'Informatyka tryb stacjonarny',
         );
     });
 
     it('Profil ogólnoakademicki', () => {
         expect(fixMajorName('Profil ogólnoakademicki')).toEqual(
-            'Informatyka profil ogólnoakademicki'
+            'Informatyka profil ogólnoakademicki',
         );
     });
 
     it('Profil praktyczny', () => {
         expect(fixMajorName('Profil praktyczny')).toEqual(
-            'Informatyka profil praktyczny'
+            'Informatyka profil praktyczny',
         );
     });
 
     it('Tryb niestacjonarny', () => {
         expect(fixMajorName('Tryb niestacjonarny')).toEqual(
-            'Informatyka tryb niestacjonarny'
+            'Informatyka tryb niestacjonarny',
         );
     });
 
