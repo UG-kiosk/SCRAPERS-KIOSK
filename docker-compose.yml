@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  scrapers-kiosk:
+    image: node:21-alpine3.18
+    container_name: scrapers-kiosk
+    command: sh ./entrypoint.sh
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - 3001:3001
+    env_file:
+      - ./.env
+    environment:
+      - PORT=3001

@@ -1,0 +1,9 @@
+node_modules
+dist
+README.md
+.env.example
+.gitignore
+coverage
+.github
+.env
+Dockerfile
