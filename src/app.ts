@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
-import lessonsPlansRouter from './routes/lessonPlan.route';
+import lessonPlanRouter from './routes/lessonPlan.route';
 import majorsRouter from './routes/majors.route';
 import staffRouter from './routes/staff.route';
 import newsRouter from './routes/news.route';
@@ -14,7 +14,7 @@ app.use(cors());
 
 app.use('/scrape', ectsRouter);
 app.use('/scrape', majorsRouter);
-app.use('/scrape', lessonsPlansRouter);
+app.use('/scrape', lessonPlanRouter);
 app.use('/scrape', staffRouter);
 app.use('/scrape', newsRouter);
 app.use('/scrape', eventsRouter)

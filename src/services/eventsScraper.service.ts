@@ -2,6 +2,7 @@ import axios from 'axios';
 import cheerio from 'cheerio';
 import { Events } from '../types/events-scraper/events.type';
 import { ErrorType } from '../types/error.type';
+import { returnScraperError } from '../utils/errorScraper';
 
 const eventsContent = async (url: string): Promise<Array<string> | null> => {
     try {
@@ -28,8 +29,6 @@ const eventsContent = async (url: string): Promise<Array<string> | null> => {
                 return text + ' ' + '\r\n';
             })
         );
-
-        // const helper = linesWithoutBlanks.filter((text) => text !== "wydarzenia")
 
         return result;
     } catch (error) {
@@ -62,22 +61,6 @@ export const eventsScraper = async (): Promise<Events[] | ErrorType> => {
         );
         return events;
     } catch (error) {
-        // @ts-ignore
-        if (error?.response?.status === 404) {
-            return {
-                // @ts-ignore
-                status: error.response.status,
-                message: 'Sorry! Could not find event',
-            };
-        }
-        // @ts-ignore
-        if (error?.response?.status) {
-            return {
-                // @ts-ignore
-                status: error.response.status,
-                message: 'Something went wrong',
-            };
-        }
-        return { status: 500, message: 'Something went wrong' };
+        return returnScraperError(error);
     }
 };
