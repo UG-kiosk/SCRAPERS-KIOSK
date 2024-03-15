@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { scrapeLessonPlan } from '../controllers/lessonPlan.controller';
 
-const lessonsPlansRouter = Router();
+const lessonPlanRouter = Router();
 
-lessonsPlansRouter.get('/lesson-plan', scrapeLessonPlan);
+lessonPlanRouter.get('/lesson-plan', scrapeLessonPlan);
 
-export default lessonsPlansRouter;
+export default lessonPlanRouter;
