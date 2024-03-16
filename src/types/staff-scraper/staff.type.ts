@@ -1,5 +1,4 @@
 export interface AcademicContent {
-    email: string;
     posts: { position: string; faculty: string[] }[];
     tutorial: string;
 }
@@ -7,5 +6,6 @@ export interface AcademicContent {
 export interface Academic {
     name: string;
     link: string;
+    email: string;
     content: AcademicContent;
 }

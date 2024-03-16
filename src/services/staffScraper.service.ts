@@ -1,12 +1,18 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
-import { AcademicContent, Academic } from '../types/staff-scraper/staff.type';
+import { Academic } from '../types/staff-scraper/staff.type';
 import { ErrorType } from '../types/error.type';
 import { returnScraperError } from '../utils/errorScraper';
 
+interface DetailsContent {
+    email: string;
+    posts: { position: string; faculty: string[] }[];
+    tutorial: string;
+}
+
 const facultyMemberScraper = async (
     url: string,
-): Promise<AcademicContent | null> => {
+): Promise<DetailsContent | null> => {
     try {
         const { data } = await axios.get(url);
         const $ = cheerio.load(data);
@@ -37,7 +43,7 @@ const facultyMemberScraper = async (
             email: email,
             posts: posts,
             tutorial: tutorial,
-        } as AcademicContent;
+        } as DetailsContent;
         return content;
     } catch (error) {
         return null;
@@ -56,7 +62,7 @@ export const staffScraper = async (): Promise<Academic[] | ErrorType> => {
         );
         const staff = await Promise.all(
             selectedElement
-                .map(async (i, element) => {
+                .map(async (_, element) => {
                     const name = $(element)
                         .find('.tytul .field-content a')
                         .text()
@@ -66,10 +72,18 @@ export const staffScraper = async (): Promise<Academic[] | ErrorType> => {
                         .attr('href');
                     const link = 'https://old.mfi.ug.edu.pl' + endpoint;
 
+                    const content: DetailsContent | null =
+                        await facultyMemberScraper(link);
+
+                    const email = content?.email;
+                    const posts = content?.posts;
+                    const tutorial = content?.tutorial;
+
                     return {
                         name: name,
                         link: link,
-                        content: await facultyMemberScraper(link),
+                        email: email,
+                        content: { posts, tutorial },
                     } as Academic;
                 })
                 .get(),
