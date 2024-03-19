@@ -1,14 +1,8 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
-import { Academic } from '../types/staff-scraper/staff.type';
+import { Academic, DetailsContent } from '../types/staff-scraper/staff.type';
 import { ErrorType } from '../types/error.type';
 import { returnScraperError } from '../utils/errorScraper';
-
-interface DetailsContent {
-    email: string;
-    posts: { position: string; faculty: string[] }[];
-    tutorial: string;
-}
 
 const facultyMemberScraper = async (
     url: string,
