@@ -7,14 +7,7 @@ export interface LessonPlanEntry {
     groups: string[];
     teachers: string[];
     class: string | number;
-    pl: {
-        subject: string;
-        type: string;
-        info: string[];
-    };
-    eng: {
-        subject?: string;
-        type?: string;
-        info?: string[];
-    };
+    subject: string;
+    type: string;
+    info: string[];
 }
