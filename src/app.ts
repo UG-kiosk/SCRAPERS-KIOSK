@@ -6,12 +6,15 @@ import staffRouter from './routes/staff.route';
 import newsRouter from './routes/news.route';
 import ectsRouter from './routes/ects.route';
 import eventsRouter from './routes/events.route';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpecs from '../swaggerConfig'
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 app.use('/scrape', ectsRouter);
 app.use('/scrape', majorsRouter);
 app.use('/scrape', lessonPlanRouter);
