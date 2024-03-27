@@ -258,12 +258,9 @@ const mapResults = (
         year: year,
         ...rest,
         groups: entryGroup,
-        pl: {
-            subject: subject,
-            type: type,
-            info: info,
-        },
-        eng: {},
+        subject: subject,
+        type: type,
+        info: info,
     };
 
     return result;
